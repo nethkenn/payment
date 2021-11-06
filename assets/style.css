@@ -1,17 +1,3 @@
-
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-<title>NEUPay</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<style>
 body {
 	margin: 0;
 	padding: 0;
@@ -96,6 +82,7 @@ header {
 	padding-right: 10px;
 	
 }
+
 label #sidebar_btn {
 	z-index: 1;
 	color: #fff;
@@ -129,25 +116,25 @@ label #sidebar_btn:hover{
 .content {
 	margin-left: 300px;
 	padding-top: 100px;
-	
-	
+}
+.webhook {
+	padding-top: 200px;	
 }
 #check {
 	display: none;
 }
 #subjects {
-  font-family: Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  table-layout: auto;
-  width: 75%;  
-  margin-left: 300px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    table-layout: auto;
+    width: 110%;  
 }
 
 #subjects td, #subjects th {
-  border: 1px solid #ddd;
-  padding: 8px;
+    border: 1px solid #ddd;
+    padding: 8px;
 }
-
+  
 #subjects tr:nth-child(even){background-color: #f2f2f2;}
 
 #subjects tr:hover {background-color: #ddd;}
@@ -159,6 +146,19 @@ label #sidebar_btn:hover{
   background-color: #04AA6D;
   color: white;
 }
+
+#paymaya th{ 
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	color: white;
+	background-color: #00344E
+}
+.arrow {
+	position: relative;
+	right: 10px;
+}
+  
 .sidebar ul{
   background: #2F323A;
   height: 100%;
@@ -199,8 +199,7 @@ label #sidebar_btn:hover{
   padding-left: 10px;
 }
 
- input[type="submit"] {
-
+ .payNow {
  	width: 344px;
 	height: 45px;
 	border: none;
@@ -210,8 +209,17 @@ label #sidebar_btn:hover{
 	margin-right: 15px;
 	
 }
-button {
-
+.danger {
+	border: none;
+	background: darkred;
+	color: white;
+}
+.delete {
+	width: 100px;
+	padding:5px;
+	border-radius: 50px;
+}
+.primary {
  	width: 344px;
 	height: 45px;
 	border: none;
@@ -220,12 +228,32 @@ button {
 	float: right;
 	margin-right: 15px;
 	
+}
+.createWebhook {
+	margin: 0 auto;
+	display: block;
+	width:80%;
+}
+.createWebhook .url {
+	float:right;
+	margin-top: 0 !important;
+	margin-right: 10px;
+	margin-bottom: 20px;
+}
+.paymongo {
+   margin-bottom: 20px;
+   float: right;
+   width: 344px;
+   height: 40px;
+   border: none;
+   background: #04AA6D;
+   color: white;
 }
 a {
 	text-decoration: none;
 	color: white;
 }
-input[type=number], select {
+input[type=number],input[type=text], select {
   width: 30%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -234,49 +262,67 @@ input[type=number], select {
   border-radius: 4px;
   box-sizing: border-box;
 }
-</style>
 
-<body>
-
-<header>
-    <label for="check">
-        <i class="fas fa-bars" id="sidebar_btn"></i>
-    </label>
-
-    <div class="left_area">
-        <h3>NEU<span>pay</span></h3>
-    </div>
-    
-    <div class="right_area">
-    <a href="session_s.php" class="logout_btn">Logout</a>
-    </div>
-</header>
+.nav {
+	width: 100%;
+  background-color: #333;
+	height: 55px;
+}
+.button {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+	margin-bottom: 5px;
+}
 
 
+ul {
+	list-style:none;
+	padding: 0;
+	margin: 0;
+	position: absolute;
+}
+ul li {
+	float: left;
+	margin-top: 10px;
+	
+	
+}
 
-    <form action="charge.php" method="post">
-        <div class="content">
+.title-header {
+	text-align: center !important;
+}
 
-        </div>
-    </form>
+ul li .a1{
+	
+	width: 150px;
+	color: white;
+	display:block;
+	text-decoration: none;
+	font-size: 15px;
+	text-align:center;
+	padding: 0px;
+	border-radius: 10px;
+	font-family:Century Gothic;
+	
+}
+.a1:hover {
+	background:#669900;
+	text-decoration: none;
+	
+}
+ul li ul {
+	
+	  background-color: #333;
+}
+ul li ul li {
+	float:none;
+}
+ul li ul {
+	display: none;
+}
 
-</body>
-</html>
-
-<script>
-   $('.payment-btn').click(function(){
-             $('.sidebar ul .payment-show').toggleClass("show");
-             $('.sidebar ul .first').toggleClass("rotate");
-           });
-		   
-		     $('.status-btn').click(function(){
-             $('.sidebar ul .status-show').toggleClass("show");
-             $('.sidebar ul .first').toggleClass("rotate");
-           });
-		   
-		    $('.transaction-btn').click(function(){
-             $('.sidebar ul .transaction-show').toggleClass("show");
-             $('.sidebar ul .first').toggleClass("rotate");
-           });
-		   
-</script>
+ul li:hover ul {
+	display:block;
+}

@@ -15,7 +15,7 @@ define('PAYMAYA_API_URL', 'https://pg-sandbox.paymaya.com');
 define('PAYMAYA_PUBLIC_KEY', 'pk-MOfNKu3FmHMVHtjyjG7vhr7vFevRkWxmxYL1Yq6iFk5');
 define('PAYMAYA_SECRET_KEY', 'sk-NMda607FeZNGRt9xCdsIRiZ4Lqu6LT898ItHbN4qPSe');
 //PAYMONGO CREDENTIALS
-define('PAYMONGO_API_URL', 'https://api.paymongo.com');
+define('PAYMONGO_API_URL', 'https://api.paymongo.com/v1/');
 define('PAYMONGO_PUBLIC_KEY', 'pk_test_ooqAtazQnoVahM7BD5fBeGkz');
 define('PAYMONGO_SECRET_KEY', 'sk_test_md3LwkVAeCqN4dHq9VGzMirL');
  
@@ -35,7 +35,7 @@ $gateway->setTestMode(true); //set it to 'false' when go live
 
 //PAYMAYA INITIALIZATION
 $paymayaPayment = new Client([
-    'base_uri' => PAYMAYA_SECRET_KEY.'/payby/v2/paymaya/',
+    'base_uri' => PAYMAYA_API_URL.'/payby/v2/paymaya/',
     'headers' => [
         'Content-Type' => 'application/json',
         'Authorization' => 'Basic '. base64_encode(PAYMAYA_PUBLIC_KEY.':'),
@@ -44,7 +44,7 @@ $paymayaPayment = new Client([
 
 //PAYMONGO INITIALIZATION
 $paymongo =  new Client([
-    'base_uri' => PAYMONGO_API_URL,
+    'base_uri' => PAYMONGO_API_URL, 
     'Accept' => 'application/json',
     'Content-Type' => 'application/json',
     'auth' => [PAYMONGO_SECRET_KEY, null],

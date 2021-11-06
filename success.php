@@ -38,7 +38,7 @@ if (array_key_exists('paymentId', $_GET) && array_key_exists('PayerID', $_GET)) 
         $payer_id = $arr_body['payer']['payer_info']['payer_id'];
         $payer_email = $arr_body['payer']['payer_info']['email'];
         $amount = $arr_body['transactions'][0]['amount']['total'];
-        $currency = PAYPAL_CURRENCY;
+        $currency = CURRENCY;
         $payment_status = $arr_body['state'];
  
         // Insert transaction data into the database
@@ -53,9 +53,18 @@ if (array_key_exists('paymentId', $_GET) && array_key_exists('PayerID', $_GET)) 
     } else {
         echo $response->getMessage();
     }
-} else if (array_key_exists('success', $_GET) && array_key_exists('type', $_GET)) {
-    var_dump($_GET);
-} else if (array_key_exists('success', $_GET) && array_key_exists('types', $_GET)) {
+} else if (array_key_exists('paymentMethod', $_GET) && $_GET['paymentMethod'] == 'paymongo') {
+    if ($_GET['success']) {
+        $db->query("UPDATE student_payments SET payment_status = 'charged' WHERE payer_id = '". $_GET['referenceNumber'] ."' ");
+        $db->query("UPDATE admin_payments SET payment_status = 'charged' WHERE payer_id = '". $_GET['referenceNumber'] ."' ");
+        $payment = $db->query("SELECT * FROM student_payments WHERE payer_id = '".$_GET['referenceNumber']."'")->fetch_all(MYSQLI_ASSOC);
+        
+        echo "Payment is successful.<br> Your transaction id is: ". $payment[0]['payment_id'];
+    } else {
+        $db->query("UPDATE student_payments SET payment_status = 'failed' WHERE payer_id = '". $_GET['referenceNumber'] ."' ");
+        echo 'Transaction is declined';
+    }
+} else if (array_key_exists('paymentMethod', $_GET) && $_GET['paymentMethod'] == 'paymaya') {
     try  {
         if ($_GET['success']) {
             $paymayaDetails = new Client([
@@ -99,8 +108,8 @@ if (array_key_exists('paymentId', $_GET) && array_key_exists('PayerID', $_GET)) 
 }
 ?></h1>
 
-<button><a href="index.php" >Home</button>
-<button><a href="view.php" >View</button>
+<button class="primary"><a href="index.php" >Home</button>
+<button class="primary"><a href="view.php" >View</button>
 	  
 <script>
 function changeStatus()

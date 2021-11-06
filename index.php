@@ -14,8 +14,8 @@
 		</select>
 
 			<br><br>
-		<input type="submit" name="submit" value="Pay Now">
-		<button><a href="view.php">View</a></button>
+		<input class="payNow" type="submit" name="submit" value="Pay Now">
+		<button class="primary"><a href="view.php">View</a></button>
 	</div>
 </form>
  

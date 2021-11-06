@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
                             'value' => $_POST['amount']
                         ],
                         'redirectUrl' => [
-                            'success' => "{$url}?success=1&type=wallet_payment&referenceNumber={$referenceNumber}",
+                            'success' => "{$url}?success=1&type=wallet_payment&referenceNumber={$referenceNumber}&&paymentMethod=paymaya/",
                             'failure' => $failedUrl,
                             'cancel' => $failedUrl,
                         ]
@@ -50,6 +50,7 @@ if (isset($_POST['submit'])) {
                 $isGcash = true;
 
             case 'grabpay':
+                $referenceNumber = time() . rand(10*45, 100*98);
                 $type = isset($isGcash) ? 'gcash' : 'grab_pay';
                 $url = 'http://payment.test/success.php';
                 $failedUrl = "http://payment.test/cancel.php";
@@ -62,7 +63,7 @@ if (isset($_POST['submit'])) {
                                     'amount' => intval($_POST['amount'] * 100),
                                     'currency' => CURRENCY,
                                     'redirect' => [
-                                        'success' => "{$url}?success=1&type=charged",
+                                        'success' => "{$url}?success=1&type=charged&paymentMethod=paymongo&referenceNumber={$referenceNumber}",
                                         'failed' => "{$failedUrl}success=0&type=charged",
                                     ],
                                 ],
@@ -71,6 +72,16 @@ if (isset($_POST['submit'])) {
                     ]);
 
                 $response = json_decode($response->getBody(), true)['data'];
+           
+                $paymentId = $response['id'];
+                $payerId = $referenceNumber;
+                $payer_email = '';
+                $amount = $_POST['amount'];
+                $currency = CURRENCY;
+                $payment_status ='pending';
+
+                $insert = $db->query("INSERT INTO student_payments(payment_id, payer_id, payer_email, amount, currency, payment_status) VALUES('". $paymentId ."', '". $payerId ."', '". $payer_email ."', '". $amount ."', '". $currency ."', '". $payment_status ."')");
+                $insert = $db->query("INSERT INTO admin_payments(payment_id,  payer_id, payer_email, amount, currency, payment_status) VALUES('". $paymentId ."', '". $payerId ."', '". $payer_email ."', '". $amount ."', '". $currency ."', '". $payment_status ."')");
                 
                 header("Location: {$response['attributes']['redirect']['checkout_url']}");
             break;
